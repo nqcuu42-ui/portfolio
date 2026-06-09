@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — nqcuu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0d;
+      --surface:  #111111;
+      --border:   #1f1f1f;
+      --muted:    #3a3a3a;
+      --text:     #c8c8c8;
+      --bright:   #efefef;
+      --accent:   #00e5a0;
+      --accent2:  #00b87a;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section { padding: 96px 48px; max-width: 900px; margin: 0 auto; }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .section-label::before { content: '// '; opacity: 0.5; }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 180px;
+      padding-bottom: 96px;
+    }
+    .hero-greeting {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      letter-spacing: 0.06em;
+    }
+    .hero-name {
+      font-family: var(--mono);
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 700;
+      color: var(--bright);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-tagline {
+      font-size: 16px;
+      color: var(--text);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .hero-tagline span { color: var(--accent); }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      padding: 10px 22px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-cta:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .about-text p { color: var(--text); margin-bottom: 16px; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-key {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .meta-val {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--bright);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .project-card {
+      border: 1px solid var(--border);
+      padding: 28px;
+      background: var(--surface);
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project-lang {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .project-title {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--bright);
+      margin-bottom: 10px;
+    }
+    .project-desc {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .project-links {
+      display: flex;
+      gap: 16px;
+    }
+    .project-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    .project-links a:hover { color: var(--accent); }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .skill-group {}
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .skill-item {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .skill-item::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ── CONTACTS ── */
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--text);
+      text-decoration: none;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .contact-link:first-child { border-top: 1px solid var(--border); }
+    .contact-link:hover { color: var(--accent); }
+    .contact-icon {
+      width: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .contact-link:hover .contact-icon { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; }
+      section { padding: 72px 20px; }
+      #hero { padding-top: 140px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">~/portfolio</span>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-greeting">$ whoami</p>
+    <h1 class="hero-name">nqcuu<span class="cursor"></span></h1>
+    <p class="hero-tagline">
+      Developer in costruzione. Mi piace fare roba con <span>Java</span>
+      e buttare giù idee che diventano progetti reali.
+    </p>
+    <a class="hero-cta" href="#projects">→ guarda i progetti</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">about</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Sono uno studente di informatica con la fissa di capire come funzionano le cose sotto.
+          Mi piace costruire progetti miei per sperimentare quello che imparo.
+        </p>
+        <p>
+          Non mi interessa fare roba che funziona solo in teoria. Voglio cose che girano,
+          che si vedono, che si usano.
+        </p>
+      </div>
+      <div class="about-meta">
+        <div class="meta-row">
+          <span class="meta-key">Status</span>
+          <span class="meta-val">Studente ITIS</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Anno</span>
+          <span class="meta-val">3° anno</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Città</span>
+          <span class="meta-val">Padova, IT</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Focus</span>
+          <span class="meta-val">Java · Web Development</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">projects</p>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <p class="project-lang">Java · Discord API</p>
+        <h3 class="project-title">FACEIT Stats Bot</h3>
+        <p class="project-desc">
+          Bot Discord per tracciare le statistiche CS2/FACEIT di un giocatore. 
+          Sviluppato tramite l'API ufficiale di FACEIT e JDA (Java Discord API) per Java.
+        </p>
+        <div class="project-links">
+          <a href="https://github.com/nqcuu42-ui/faceittracker">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <p class="project-lang">PHP · HTML · SQL</p>
+        <h3 class="project-title">Tutorando</h3>
+        <p class="project-desc">
+          Piattaforma di tutoraggio tra studenti per il mio istituto. 
+          Prenotazioni, profili, sistema di matching peer-to-peer.
+        </p>
+      </div>
+
+      <div class="project-card" style="border-style: dashed; border-color: var(--muted); opacity: 0.5;">
+        <p class="project-lang">??? · ???</p>
+        <h3 class="project-title">Prossimo progetto</h3>
+        <p class="project-desc">
+          In costruzione. Torna tra qualche settimana.
+        </p>
+        <div class="project-links">
+          <a href="#">WIP</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">contact</p>
+    <div class="contact-row">
+      <a class="contact-link" href="https://discord.gg/ApdMy762sR" target="_blank">
+        <span class="contact-icon">dc</span>
+        nqcuu
+      </a>
+      <a class="contact-link" href="https://github.com/nqcuu42-ui" target="_blank">
+        <span class="contact-icon">gh</span>
+        github.com/nqcuu
+      </a>
+      <a class="contact-link" href="https://t.me/tardoide" target="_blank">
+        <span class="contact-icon">tg</span>
+        @tardoide
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    made with curiosity
+  </footer>
+
+</body>
+</html>
